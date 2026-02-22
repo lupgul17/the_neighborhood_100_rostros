@@ -103,7 +103,8 @@ export default function RostrosGallery({
           {/* Strip */}
           <div
             ref={stripRef}
-            className="w-[1050px] overflow-x-auto no-scrollbar scroll-smooth"
+            className="overflow-x-auto no-scrollbar scroll-smooth"
+            style={{ width: "clamp(200px, 60vw, 998px)" }}
           >
             {/* menos espacio entre thumbs */}
             <div className="flex items-center gap-0 px-1 py-1">
@@ -124,9 +125,13 @@ export default function RostrosGallery({
                     {/* ✅ thumbs más grandes */}
                     <div
                     className={[
-                      "w-[165px] h-[165px] flex items-center justify-center",
+                      "flex items-center justify-center flex-shrink-0",
                       idx !== 0 ? "-ml-6" : "",
                     ].join(" ")}
+                    style={{
+                      width: "clamp(100px, 15vw, 157px)",
+                      height: "clamp(100px, 15vw, 157px)"
+                    }}
                   >
                       <img
                         src={cld(p.public_id, 1200)}
@@ -171,11 +176,12 @@ export default function RostrosGallery({
           alt=""
           width={activePhoto.width ?? 1400}
           height={activePhoto.height ?? 1800}
-          className="h-[700px] w-auto object-contain select-none"
+          className="w-auto object-contain select-none"
+          style={{ height: "clamp(350px, 50vw, 665px)" }}
           priority
         />
       ) : (
-        <div className="h-[700px] w-[700px]" />
+        <div style={{ height: "clamp(350px, 50vw, 665px)", width: "clamp(350px, 50vw, 665px)" }} />
       )}
     </div>
   );
