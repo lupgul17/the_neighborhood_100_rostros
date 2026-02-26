@@ -95,11 +95,11 @@ export default function RostrosGallery({
   if (mode === "thumbs") {
     return (
       <div className="w-full flex items-center justify-center">
-        <div className="flex items-center gap-10">
-          {/* Flecha izquierda */}
+        <div className="flex items-center gap-2 md:gap-10 w-full md:w-auto">
+          {/* Flecha izquierda - solo desktop */}
           <button
             onClick={goPrev}
-            className="text-[64px] leading-none font-light text-black disabled:opacity-20 select-none"
+            className="hidden md:block text-[64px] leading-none font-light text-black disabled:opacity-20 select-none flex-shrink-0"
             aria-label="Anterior"
           >
             ‹
@@ -108,8 +108,8 @@ export default function RostrosGallery({
           {/* Strip */}
           <div
             ref={stripRef}
-            className="overflow-x-auto no-scrollbar scroll-smooth"
-            style={{ width: "clamp(300px, 75vw, 1250px)" }}
+            className="overflow-x-auto no-scrollbar scroll-smooth flex-1"
+            style={{ width: "clamp(300px, 90vw, 1250px)" }}
           >
             {/* menos espacio entre thumbs */}
             <div className="flex items-center gap-0 px-1 py-1">
@@ -155,10 +155,10 @@ export default function RostrosGallery({
             </div>
           </div>
 
-          {/* Flecha derecha */}
+          {/* Flecha derecha - solo desktop */}
           <button
             onClick={goNext}
-            className="text-[64px] leading-none font-light text-black disabled:opacity-20 select-none"
+            className="hidden md:block text-[64px] leading-none font-light text-black disabled:opacity-20 select-none flex-shrink-0"
             aria-label="Siguiente"
           >
             ›
