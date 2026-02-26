@@ -109,7 +109,7 @@ export default function RostrosGallery({
           <div
             ref={stripRef}
             className="overflow-x-auto no-scrollbar scroll-smooth"
-            style={{ width: "clamp(200px, 60vw, 998px)" }}
+            style={{ width: "clamp(300px, 75vw, 1250px)" }}
           >
             {/* menos espacio entre thumbs */}
             <div className="flex items-center gap-0 px-1 py-1">
