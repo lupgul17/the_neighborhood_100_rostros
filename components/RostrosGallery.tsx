@@ -80,8 +80,14 @@ export default function RostrosGallery({
     el?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
   }, [active, mode]);
 
-  const goPrev = () => setActive(Math.max(active - 1, 0));
-  const goNext = () => setActive(Math.min(active + 1, Math.max(photos.length - 1, 0)));
+  const goPrev = () => {
+    if (photos.length === 0) return;
+    setActive(active === 0 ? photos.length - 1 : active - 1);
+  };
+  const goNext = () => {
+    if (photos.length === 0) return;
+    setActive(active === photos.length - 1 ? 0 : active + 1);
+  };
 
   /* ===============================
      THUMBS (carrusel)
@@ -93,7 +99,6 @@ export default function RostrosGallery({
           {/* Flecha izquierda */}
           <button
             onClick={goPrev}
-            disabled={active === 0}
             className="text-[64px] leading-none font-light text-black disabled:opacity-20 select-none"
             aria-label="Anterior"
           >
@@ -153,7 +158,6 @@ export default function RostrosGallery({
           {/* Flecha derecha */}
           <button
             onClick={goNext}
-            disabled={active === photos.length - 1}
             className="text-[64px] leading-none font-light text-black disabled:opacity-20 select-none"
             aria-label="Siguiente"
           >

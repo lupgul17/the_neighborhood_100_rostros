@@ -25,6 +25,8 @@ export async function GET(
       height: r.height,
       format: r.format,
     }));
+    console.log(`Found ${photos.length} photos for personaId=${personaId}`);
+    console.log("photo:", photos);
 
     return NextResponse.json({
       personaId,
