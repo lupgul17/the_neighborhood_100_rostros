@@ -14,10 +14,11 @@ export async function GET(
     // Search API: esto sí filtra por folder de contención
     const result = await cloudinary.search
       .expression(`resource_type:image AND folder="${folder}"`)
-      .sort_by("created_at", "desc")
+      .sort_by("public_id", "asc")
       .max_results(100)
       .execute();
-
+    console.log("Cloudinary search result:", result);
+    console.log()
     const photos = (result.resources ?? []).map((r: any) => ({
       public_id: r.public_id,
       secure_url: r.secure_url,
