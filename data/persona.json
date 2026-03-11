@@ -1,0 +1,42 @@
+[
+    {
+        "id": "001",
+        "nombre": "Julio Fernando Flores Lucas",
+        "fecha_nacimiento": "1976-01-05",
+        "profesion": "mercadologo",
+        "descripcion": "Soy un eterno aprendiz, todo tiene un para qué. Sueño en grande, sirvo con propósito, busco la excelencia y lucho con determinación"
+    },
+    {   
+        "id": "005",
+        "nombre": "Edgar Rosales",
+        "fecha_nacimiento": "2001-01-1",
+        "profesion": "Chef",
+        "descripcion": " "},
+    {
+        "id": "006",
+        "nombre": "Eduardo Exequiel González Saquich",
+        "fecha_nacimiento": "1991-01-23",
+        "profesion": "diseñador gráfico y fotógrafo",
+        "descripcion": "Soy viajero de lugares y de procesos, aprendiz constante y creyente del propósito de Dios a mi vida. Mi filosofía de vida nace de entender que incluso las malas decisiones pueden transformarse en dirección cuando se enfrentan con madurez. No hablo desde la perfección, sino desde la experiencia. Hoy disfruto de momentos en montañas, ciudades y lugares del mundo, en donde en el camino encuentro a personas increíbles con quienes puedo compartir experiencias de vida y aprender de ellos."
+    },
+    {
+        "id": "011",
+        "nombre": "Liliana Lizet Franco Ovalle",
+        "fecha_nacimiento": "1988-07-17",
+        "profesion": "Diseñadora Gráfica y Docente",
+        "descripcion": "Me gustan los detalles, el arte y las cosas que transmiten algo o cuentan una historia. Algo que la vida me ha enseñado es que cada proceso tiene su tiempo, y que crecer también significa ser paciente, confiar y avanzar con cariño por lo que uno hace."
+    },
+    {
+        "id": "016",
+        "nombre": "Stephany Victoria López Godínez",
+        "fecha_nacimiento": "2001-11-10",
+        "profesion": "Ingeniera civil",
+        "descripcion": " "
+    },
+    {
+        "id": "017",
+        "nombre": "Emily Nicole Jongezoon",
+        "fecha_nacimiento": "1997-10-24",
+        "profesion": "Comunicadora/ creadora de contenido, modelo.",
+        "descripcion": "me gusta estar constantemente aprendiendo, complicarme la vida, la musica, el arte, vestirme bien y reflejar mi personalidad a través de mis prendas, reinventarme, la cocina, ayudar, consentir, crecer y sentirme productiva."}
+]

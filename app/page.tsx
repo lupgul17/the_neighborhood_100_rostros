@@ -4,16 +4,29 @@ import { useState } from "react";
 import Image from "next/image";
 import RostrosGallery from "@/components/RostrosGallery";
 import { cld } from "@/lib/cloudinary";
-
+import personasData from "@/data/persona.json";
 type Photo = { public_id: string; width?: number; height?: number };
 
+type Persona = {
+  id: string;
+  nombre: string;
+  fecha_nacimiento: string;
+  profesion: string;
+  descripcion: string;
+};
+
 export default function Home() {
+  
   const logoTitle = "logo_xrabfd";
   const logo100 = "100_rxoq3w";
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [photos, setPhotos] = useState<Photo[]>([]);
-
+   let personaActivaId = photos[activeIndex]?.public_id?.split("_").slice(-2, -1)[0];
+  const personaActiva: Persona | undefined =
+    personasData.find((p) => p.id === personaActivaId);
+    console.log("personaActivaId", personaActivaId);
+    console.log("personaActiva", personaActiva);
   return (
     <main className="min-h-screen bg-white flex flex-col overflow-x-hidden">
       {/* CANVAS */}
@@ -22,7 +35,8 @@ export default function Home() {
       <div className="flex justify-center">
   <section className="grid grid-cols-1 md:grid-cols-[minmax(260px,475px)_auto] gap-x-4 sm:gap-x-8 lg:gap-x-12 xl:gap-x-[60px] items-stretch w-full md:w-fit">
           {/* IZQUIERDA (NO pegada a esquina) */}
-          <div className="pt-8 sm:pt-16 lg:pt-20 xl:pt-[120px] h-full w-full flex justify-center md:justify-start">
+          {personaActivaId === '000' || personaActiva === undefined ? (
+            <div className="pt-8 sm:pt-16 lg:pt-20 xl:pt-[120px] h-full w-full flex justify-center md:justify-start">
             <div className="w-full md:w-auto">
               <Image
                 src={cld(logoTitle, 1200)}
@@ -60,6 +74,42 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          ):(
+          <div className="pt-8 sm:pt-16 lg:pt-20 xl:pt-[120px] h-full w-full flex justify-center md:justify-start">
+            <div className="w-full md:w-auto">
+              <div className="mb-6 sm:mb-8 lg:mb-10">
+                <Image
+                  src={cld(logoTitle, 1200)}
+                  alt="The Neighborhood"
+                  width={1000}
+                  height={350}
+                  className="h-auto object-contain"
+                  style={{ width: "clamp(120px, 25vw, 180px)" }}
+                  priority
+                />
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[40px] font-bold tracking-[0.02em] text-neutral-300 leading-[1.2] mb-4">
+                {personaActiva?.nombre || "Nombre no disponible"}
+              </h2>
+              <p className="text-sm sm:text-base lg:text-lg xl:text-[22px] font-medium tracking-[0.01em] text-neutral-400 leading-relaxed mb-2">
+                {personaActiva
+                  ? `Nacido el ${new Date(
+                      personaActiva.fecha_nacimiento
+                    ).toLocaleDateString("es-ES", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}, ${personaActiva.profesion}`
+                  : "Información no disponible"}
+              </p>
+              <p className="text-base sm:text-lg lg:text-xl xl:text-[22px] font-medium tracking-[0.01em] text-neutral-500 leading-relaxed">
+                {personaActiva?.descripcion || "Descripción no disponible"}
+              </p>
+            </div>
+            </div>
+
+          )}
 
           {/* DERECHA (HERO) */}
           <div className="flex justify-center md:justify-start items-start h-full w-full md:w-auto">
