@@ -110,9 +110,11 @@ export default function Home() {
                     })}, ${personaActiva.profesion}`
                   : "Información no disponible"}
               </p>
-              <p className="text-base sm:text-lg lg:text-xl xl:text-[22px] font-medium tracking-[0.01em] text-neutral-500 leading-relaxed">
-                {personaActiva?.descripcion || "Descripción no disponible"}
-              </p>
+              <div className="max-h-[clamp(180px,28vh,320px)] overflow-y-auto pr-3">
+                <p className="text-base sm:text-lg lg:text-xl xl:text-[22px] font-medium tracking-[0.01em] text-neutral-500 leading-relaxed">
+                  {personaActiva?.descripcion || "Descripción no disponible"}
+                </p>
+              </div>
             </div>
             </div>
 
