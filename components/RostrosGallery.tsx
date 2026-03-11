@@ -22,7 +22,44 @@ type Props = {
   photosProp?: Photo[];
   onPhotosLoaded?: (photos: Photo[]) => void;
   onPhotoClick?: () => void;
+  onLoadingChange?: (isLoading: boolean) => void;
 };
+
+const photoCache = new Map<string, Photo[]>();
+
+async function loadPhotos(personaId: string) {
+  const cached = photoCache.get(personaId);
+  if (cached) return cached;
+
+  const res = await fetch(`/api/rostros/${personaId}`);
+  const data = await res.json();
+  const list: Photo[] = data.photos ?? [];
+  photoCache.set(personaId, list);
+  return list;
+}
+
+function preloadImage(src: string) {
+  if (typeof window === "undefined") return;
+  const img = new window.Image();
+  img.src = src;
+}
+
+function preloadPhotoSet(photos: Photo[], widths: number[]) {
+  for (const photo of photos) {
+    for (const width of widths) {
+      preloadImage(cld(photo.public_id, width));
+    }
+  }
+}
+
+export async function preloadPersonaGallery(personaId?: string) {
+  if (!personaId) return [];
+
+  const list = await loadPhotos(personaId);
+  const firstPhoto = list[0]?.public_id;
+  if (firstPhoto) preloadImage(cld(firstPhoto, 1600));
+  return list;
+}
 
 export default function RostrosGallery({
   personaId,
@@ -32,6 +69,7 @@ export default function RostrosGallery({
   photosProp,
   onPhotosLoaded,
   onPhotoClick,
+  onLoadingChange,
 }: Props) {
   const [photosLocal, setPhotosLocal] = useState<Photo[]>([]);
   const [activeLocal, setActiveLocal] = useState(0);
@@ -56,16 +94,19 @@ export default function RostrosGallery({
     let cancelled = false;
 
     async function load() {
-      const res = await fetch(`/api/rostros/${personaId}`, { cache: "no-store" });
-      const data = await res.json();
-      if (cancelled) return;
+      onLoadingChange?.(true);
+      try {
+        const list = await loadPhotos(personaId);
+        if (cancelled) return;
 
-      const list: Photo[] = data.photos ?? [];
-      setPhotosLocal(list);
-      onPhotosLoaded?.(list);
+        setPhotosLocal(list);
+        onPhotosLoaded?.(list);
 
-      if (activeIndex === undefined) setActiveLocal(0);
-      onActiveChange?.(0);
+        if (activeIndex === undefined) setActiveLocal(0);
+        onActiveChange?.(0);
+      } finally {
+        if (!cancelled) onLoadingChange?.(false);
+      }
     }
 
     load();
@@ -90,6 +131,19 @@ export default function RostrosGallery({
     if (photos.length === 0) return;
     setActive(active === photos.length - 1 ? 0 : active + 1);
   };
+
+  useEffect(() => {
+    if (photos.length === 0) return;
+
+    if (mode === "hero") {
+      const heroCandidates = photos.slice(active, active + 3);
+      preloadPhotoSet(heroCandidates, [1600]);
+      return;
+    }
+
+    const initialThumbs = photos.slice(0, 8);
+    preloadPhotoSet(initialThumbs, [400]);
+  }, [active, mode, photos]);
 
   /* ===============================
      THUMBS (carrusel)
@@ -141,7 +195,7 @@ export default function RostrosGallery({
                     }}
                   >
                       <img
-                        src={cld(p.public_id, 1200)}
+                        src={cld(p.public_id, 400)}
                         alt=""
                         draggable={false}
                         className={[
@@ -178,7 +232,7 @@ export default function RostrosGallery({
       {activePhoto ? (
         <Image
           key={activePhoto.public_id}
-          src={cld(activePhoto.public_id, 3000)}
+          src={cld(activePhoto.public_id, 1600)}
           alt=""
           width={activePhoto.width ?? 1400}
           height={activePhoto.height ?? 1800}

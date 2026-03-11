@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import RostrosGallery from "@/components/RostrosGallery";
+import RostrosGallery, { preloadPersonaGallery } from "@/components/RostrosGallery";
 import ModalPersonaGaleria from "@/components/ModalPersonaGaleria";
 import { cld } from "@/lib/cloudinary";
 import personasData from "@/data/persona.json";
@@ -24,11 +24,16 @@ export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [showModal, setShowModal] = useState(false);
-   let personaActivaId = photos[activeIndex]?.public_id?.split("_").slice(-2, -1)[0];
+  const personaActivaId = photos[activeIndex]?.public_id?.split("_").slice(-2, -1)[0];
   const personaActiva: Persona | undefined =
     personasData.find((p) => p.id === personaActivaId);
-    console.log("personaActivaId", personaActivaId);
-    console.log("personaActiva", personaActiva);
+
+  useEffect(() => {
+    preloadPersonaGallery(personaActivaId).catch(() => {
+      // Ignore preloading failures; the modal still loads on demand.
+    });
+  }, [personaActivaId]);
+
   return (
     <main className="min-h-screen bg-white flex flex-col overflow-x-hidden">
       {/* CANVAS */}

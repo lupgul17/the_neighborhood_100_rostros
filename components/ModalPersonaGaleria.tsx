@@ -15,6 +15,7 @@ type Props = {
 export default function ModalPersonaGaleria({ isOpen, onClose, personaId }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePrev = () => {
     if (photos.length === 0) return;
@@ -81,7 +82,7 @@ export default function ModalPersonaGaleria({ isOpen, onClose, personaId }: Prop
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-visible z-0">
           {photos
             .map((p, idx) => ({ photo: p, idx, step: idx - activeIndex }))
-            .filter(({ idx }) => idx !== activeIndex)
+            .filter(({ idx, step }) => idx !== activeIndex && Math.abs(step) <= 2)
             .sort((a, b) => Math.abs(b.step) - Math.abs(a.step))
             .map(({ photo, step }) => {
               const depth = Math.abs(step);
@@ -94,7 +95,7 @@ export default function ModalPersonaGaleria({ isOpen, onClose, personaId }: Prop
               return (
                 <img
                   key={photo.public_id}
-                  src={cld(photo.public_id, 1200)}
+                  src={cld(photo.public_id, 800)}
                   alt=""
                   className="absolute h-auto w-[clamp(240px,24vw,430px)] select-none object-contain"
                   style={{
@@ -109,6 +110,16 @@ export default function ModalPersonaGaleria({ isOpen, onClose, personaId }: Prop
 
         {/* Galería - carrusel grande */}
         <div className="relative z-10">
+          {isLoading && (
+            <div
+              className="absolute inset-0 z-20 flex items-center justify-center rounded-sm bg-white/35 backdrop-blur-sm"
+              aria-hidden="true"
+            >
+              <div
+                className="h-[clamp(350px,50vw,665px)] w-[clamp(260px,42vw,540px)] animate-pulse bg-white/70"
+              />
+            </div>
+          )}
           <RostrosGallery
             personaId={personaId}
             mode="hero"
@@ -116,6 +127,7 @@ export default function ModalPersonaGaleria({ isOpen, onClose, personaId }: Prop
             onActiveChange={setActiveIndex}
             photosProp={photos}
             onPhotosLoaded={setPhotos}
+            onLoadingChange={setIsLoading}
           />
         </div>
 
