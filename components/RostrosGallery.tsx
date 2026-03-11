@@ -21,6 +21,7 @@ type Props = {
 
   photosProp?: Photo[];
   onPhotosLoaded?: (photos: Photo[]) => void;
+  onPhotoClick?: () => void;
 };
 
 export default function RostrosGallery({
@@ -30,6 +31,7 @@ export default function RostrosGallery({
   onActiveChange,
   photosProp,
   onPhotosLoaded,
+  onPhotoClick,
 }: Props) {
   const [photosLocal, setPhotosLocal] = useState<Photo[]>([]);
   const [activeLocal, setActiveLocal] = useState(0);
@@ -180,9 +182,10 @@ export default function RostrosGallery({
           alt=""
           width={activePhoto.width ?? 1400}
           height={activePhoto.height ?? 1800}
-          className="w-auto object-contain select-none"
+          className="w-auto object-contain select-none cursor-pointer"
           style={{ height: "clamp(350px, 50vw, 665px)" }}
           priority
+          onClick={onPhotoClick}
         />
       ) : (
         <div style={{ height: "clamp(350px, 50vw, 665px)", width: "clamp(350px, 50vw, 665px)" }} />

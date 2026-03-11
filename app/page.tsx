@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import RostrosGallery from "@/components/RostrosGallery";
+import ModalPersonaGaleria from "@/components/ModalPersonaGaleria";
 import { cld } from "@/lib/cloudinary";
 import personasData from "@/data/persona.json";
 type Photo = { public_id: string; width?: number; height?: number };
@@ -22,6 +23,7 @@ export default function Home() {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [photos, setPhotos] = useState<Photo[]>([]);
+  const [showModal, setShowModal] = useState(false);
    let personaActivaId = photos[activeIndex]?.public_id?.split("_").slice(-2, -1)[0];
   const personaActiva: Persona | undefined =
     personasData.find((p) => p.id === personaActivaId);
@@ -119,6 +121,7 @@ export default function Home() {
               activeIndex={activeIndex}
               onActiveChange={setActiveIndex}
               onPhotosLoaded={setPhotos}
+              onPhotoClick={() => setShowModal(true)}
             />
           </div>
         </section>
@@ -135,6 +138,13 @@ export default function Home() {
           photosProp={photos}
         />
       </div>
+
+      {/* Modal */}
+      <ModalPersonaGaleria
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        personaId={personaActivaId}
+      />
     </main>
   );
 }
