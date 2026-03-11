@@ -20,6 +20,12 @@
         "descripcion": "Soy viajero de lugares y de procesos, aprendiz constante y creyente del propósito de Dios a mi vida. Mi filosofía de vida nace de entender que incluso las malas decisiones pueden transformarse en dirección cuando se enfrentan con madurez. No hablo desde la perfección, sino desde la experiencia. Hoy disfruto de momentos en montañas, ciudades y lugares del mundo, en donde en el camino encuentro a personas increíbles con quienes puedo compartir experiencias de vida y aprender de ellos."
     },
     {
+        "id": "007",
+        "nombre": "Rogelio Escobar",
+        "fecha_nacimiento": "1995-04-5",
+        "profesion": "Diseñador de moda y Director creativo",
+        "descripcion": "Veo la moda como una forma de contar historias y traducir experiencias en belleza. Mi trabajo nace de la sensibilidad hacia lo que vivimos: contradicciones, extremos y tensiones que nos definen. Me interesa explorar los contrastes —lo negativo y lo positivo, la inocencia y la oscuridad, el fetichismo y el romanticismo— desde un lente estético que transforma y resignifica.  Soy profundamente perfeccionista. Busco precisión y coherencia en cada decisión, pero he aprendido que el verdadero equilibrio está en saber cuándo detenerme. Entender los límites entre la fantasía utópica y la realidad de ser humano me mantiene en la búsqueda constante de exigirme más sin perder la honestidad."},
+    {
         "id": "011",
         "nombre": "Liliana Lizet Franco Ovalle",
         "fecha_nacimiento": "1988-07-17",
