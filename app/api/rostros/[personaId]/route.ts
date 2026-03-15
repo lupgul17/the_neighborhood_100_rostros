@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { cloudinary } from "@/lib/cloudinary.server";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 export async function GET(
   _req: Request,

@@ -57,7 +57,7 @@ export async function preloadPersonaGallery(personaId?: string) {
 
   const list = await loadPhotos(personaId);
   const firstPhoto = list[0]?.public_id;
-  if (firstPhoto) preloadImage(cld(firstPhoto, 1600));
+  if (firstPhoto) preloadImage(cld(firstPhoto, 900));
   return list;
 }
 
@@ -137,12 +137,12 @@ export default function RostrosGallery({
 
     if (mode === "hero") {
       const heroCandidates = photos.slice(active, active + 3);
-      preloadPhotoSet(heroCandidates, [1600]);
+      preloadPhotoSet(heroCandidates, [900]);
       return;
     }
 
     const initialThumbs = photos.slice(0, 8);
-    preloadPhotoSet(initialThumbs, [400]);
+    preloadPhotoSet(initialThumbs, [200]);
   }, [active, mode, photos]);
 
   /* ===============================
@@ -195,7 +195,7 @@ export default function RostrosGallery({
                     }}
                   >
                       <img
-                        src={cld(p.public_id, 400)}
+                        src={cld(p.public_id, 200)}
                         alt=""
                         draggable={false}
                         className={[
@@ -232,7 +232,7 @@ export default function RostrosGallery({
       {activePhoto ? (
         <Image
           key={activePhoto.public_id}
-          src={cld(activePhoto.public_id, 1600)}
+          src={cld(activePhoto.public_id, 900)}
           alt=""
           width={activePhoto.width ?? 1400}
           height={activePhoto.height ?? 1800}
