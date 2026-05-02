@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import RostrosGallery from "./RostrosGallery";
 import { cld } from "@/lib/cloudinary";
+import personasData from "@/data/persona.json";
 
 type Photo = { public_id: string; width?: number; height?: number };
 
@@ -16,7 +17,8 @@ export default function ModalPersonaGaleria({ isOpen, onClose, personaId }: Prop
   const [activeIndex, setActiveIndex] = useState(0);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
+  const persona = personasData.find((p) => p.id === personaId);
+  const spotifyTrackId = (persona as any)?.spotify_track_id;
   const handlePrev = () => {
     if (photos.length === 0) return;
     setActiveIndex((prev) => (prev === 0 ? photos.length - 1 : prev - 1));
@@ -68,6 +70,19 @@ export default function ModalPersonaGaleria({ isOpen, onClose, personaId }: Prop
         >
           ×
         </button>
+        {/* Spotify embed - oculto visualmente pero funcional */}
+        {spotifyTrackId && (
+          <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 z-20">
+            <iframe
+              src={`https://open.spotify.com/embed/track/${spotifyTrackId}?utm_source=generator&theme=1`}
+              width="300"
+              height="80"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              className="rounded-xl opacity-70 hover:opacity-100 transition-opacity"
+            />
+          </div>
+        )}
 
         {/* Flecha izquierda */}
         <button
